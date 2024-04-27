@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:null_project/firebase_options.dart';
 import 'package:null_project/onboard/Screens/onboardHome.dart';
 import 'package:null_project/onboard/Screens/onboard_1.dart';
+import 'package:null_project/splashScreen/view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,7 @@ class SmartpuyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Onboard_home(),
+      home: splash(),
     );
   }
 }

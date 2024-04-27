@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:null_project/loginAndRegister/Login.dart';
 import 'package:null_project/onboard/Screens/onboard_1.dart';
 import 'package:null_project/onboard/Screens/onboard_2.dart';
 import 'package:null_project/onboard/Screens/onboard_3.dart';
@@ -93,7 +94,12 @@ class _Onboard_homeState extends State<Onboard_home> {
                       pageController.nextPage(
                           duration: const Duration(milliseconds: 200),
                           curve: Curves.bounceInOut);
-                    } else {}
+                    } else {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const login()),
+                          (h) => false);
+                    }
                     setState(() {});
                   },
                   child: const Text(
