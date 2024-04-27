@@ -34,7 +34,7 @@ class _splashState extends State<splash> {
   }
 
   Future<void> gotoboard() async {
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Onboard_home()),
           (h) => false);

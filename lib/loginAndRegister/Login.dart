@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:null_project/home/homescreen/home.dart';
+import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
+import 'package:null_project/loginAndRegister/cubits/logincubit/states.dart';
+import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
+import 'package:null_project/loginAndRegister/models/usermodel.dart';
 import 'package:null_project/loginAndRegister/register.dart';
 import 'package:null_project/loginAndRegister/widgets/custombutton.dart';
 import 'package:null_project/loginAndRegister/widgets/customtextfiled.dart';
@@ -16,6 +23,7 @@ class _loginState extends State<login> {
   String emial = "";
   String password = "";
   bool ispssword = false;
+  GlobalKey<FormState> keyform = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +50,7 @@ class _loginState extends State<login> {
                   height: 20,
                 ),
                 Form(
+                  key: keyform,
                   child: Column(
                     children: [
                       Customtextfiled(
@@ -103,7 +112,43 @@ class _loginState extends State<login> {
                     ),
                   ),
                 ),
-                Custombutton(onTap: () {}, text: "Login"),
+                BlocConsumer<logincubit, states>(builder: (context, state) {
+                  if (state is loading) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return Custombutton(
+                        onTap: () {
+                          if (keyform.currentState!.validate()) {
+                            BlocProvider.of<logincubit>(context)
+                                .login(email: emial, pass: password);
+                          }
+                        },
+                        text: "Login");
+                  }
+                }, listener: (context, stets) {
+                  if (stets is failuer) {
+                    Fluttertoast.showToast(
+                        msg: "opps: an error has occurred",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  } else if (stets is success) {
+                    Fluttertoast.showToast(
+                        msg: "The operation was completed successfully",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.blue,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => home()));
+                  }
+                }),
                 const SizedBox(
                   height: 10,
                 ),

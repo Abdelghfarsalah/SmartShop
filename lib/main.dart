@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:null_project/firebase_options.dart';
+import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
+import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
 import 'package:null_project/onboard/Screens/onboardHome.dart';
 import 'package:null_project/onboard/Screens/onboard_1.dart';
 import 'package:null_project/splashScreen/view.dart';
@@ -19,9 +22,15 @@ class SmartpuyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: splash(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => registercubit()),
+        BlocProvider(create: (context) => logincubit()),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: splash(),
+      ),
     );
   }
 }
