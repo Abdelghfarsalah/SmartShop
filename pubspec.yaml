@@ -41,6 +41,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   flutter_bloc: ^8.1.5
   fluttertoast: ^8.2.5
+  flutter_otp_text_field: ^1.1.3+2
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
     - assets/images/spalsh/Screenshot 2024-04-27 181304.png
     - assets/images/LoginAndRegister/Login/
     - assets/images/LoginAndRegister/register/
+    - assets/images/LoginAndRegister/forgetpass/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

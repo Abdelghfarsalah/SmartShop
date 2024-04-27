@@ -6,8 +6,10 @@ import 'package:null_project/home/homescreen/home.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/states.dart';
 import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
+import 'package:null_project/loginAndRegister/forgetpages/enteremail.dart';
 import 'package:null_project/loginAndRegister/models/usermodel.dart';
 import 'package:null_project/loginAndRegister/register.dart';
+import 'package:null_project/loginAndRegister/widgets/contactdialog.dart';
 import 'package:null_project/loginAndRegister/widgets/custombutton.dart';
 import 'package:null_project/loginAndRegister/widgets/customtextfiled.dart';
 import 'package:null_project/splashScreen/view.dart';
@@ -84,7 +86,7 @@ class _loginState extends State<login> {
                             ispssword = !ispssword;
                             setState(() {});
                           },
-                          icon: ispssword
+                          icon: !ispssword
                               ? const Icon(
                                   FontAwesomeIcons.eye,
                                   color: Colors.blue,
@@ -102,7 +104,13 @@ class _loginState extends State<login> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const enteremil(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Forget Password ?",
                       style: TextStyle(
@@ -182,15 +190,63 @@ class _loginState extends State<login> {
                   children: [
                     const Spacer(),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                    title: Text("Facebook",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.w800)),
+                                    content: Contactdialog(
+                                      title: "Facebook",
+                                      image:
+                                          "assets/images/LoginAndRegister/Login/face.png",
+                                    ));
+                              });
+                        },
                         child: Image.asset(
                             "assets/images/LoginAndRegister/Login/face.png")),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                    title: Text("Google",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.w800)),
+                                    content: Contactdialog(
+                                      title: "Goolge",
+                                      image:
+                                          "assets/images/LoginAndRegister/Login/google.png",
+                                    ));
+                              });
+                        },
                         child: Image.asset(
                             "assets/images/LoginAndRegister/Login/google.png")),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                    title: Text("Instagram.",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w800)),
+                                    content: Contactdialog(
+                                      title: "Instagram",
+                                      image:
+                                          "assets/images/LoginAndRegister/Login/insta.png",
+                                    ));
+                              });
+                        },
                         child: Image.asset(
                             "assets/images/LoginAndRegister/Login/insta.png")),
                     const Spacer(),

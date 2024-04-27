@@ -120,7 +120,7 @@ class _registerState extends State<register> {
                             ispssword = !ispssword;
                             setState(() {});
                           },
-                          icon: ispssword
+                          icon: !ispssword
                               ? const Icon(
                                   FontAwesomeIcons.eye,
                                   color: Colors.blue,
