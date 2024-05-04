@@ -42,6 +42,11 @@ dependencies:
   flutter_bloc: ^8.1.5
   fluttertoast: ^8.2.5
   flutter_otp_text_field: ^1.1.3+2
+  flutter_zoom_drawer: ^3.2.0
+  get: ^4.6.6
+  carousel_slider: ^4.2.1
+  http: ^1.2.1
+  dio: ^5.4.3+1
 
 dev_dependencies:
   flutter_test:
@@ -69,7 +74,10 @@ flutter:
   assets:
     - assets/images/onboard/onboard_1/
     - assets/images/onboard/onboard_2/
+    - assets/images/Sliders/
+    - assets/images/categore/
     - assets/images/onboard/onboard_3/
+    - assets/images/icon/
     - assets/images/spalsh/Screenshot 2024-04-27 181304.png
     - assets/images/LoginAndRegister/Login/
     - assets/images/LoginAndRegister/register/

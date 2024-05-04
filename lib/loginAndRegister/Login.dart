@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:null_project/home/homescreen/home.dart';
+import 'package:null_project/home/home.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/states.dart';
 import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';

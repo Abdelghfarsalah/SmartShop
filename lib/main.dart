@@ -1,19 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:null_project/firebase_options.dart';
+import 'package:null_project/home/cubits/bottomNavBar/cubit.dart';
+import 'package:null_project/home/cubits/categories/cubit.dart';
+import 'package:null_project/home/home.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
 import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
-import 'package:null_project/onboard/Screens/onboardHome.dart';
-import 'package:null_project/onboard/Screens/onboard_1.dart';
-import 'package:null_project/splashScreen/view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent));
   runApp(const SmartpuyApp());
 }
 
@@ -26,10 +31,12 @@ class SmartpuyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => registercubit()),
         BlocProvider(create: (context) => logincubit()),
+        BlocProvider(create: (context) => NavBarcubit()),
+        BlocProvider(create: (context) => Categorecubit())
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: splash(),
+        home: home(),
       ),
     );
   }

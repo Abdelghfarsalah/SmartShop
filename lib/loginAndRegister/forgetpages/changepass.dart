@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:null_project/home/homescreen/home.dart';
+import 'package:null_project/home/home.dart';
 import 'package:null_project/loginAndRegister/widgets/custombutton.dart';
 import 'package:null_project/loginAndRegister/widgets/customtextfiled.dart';
 
