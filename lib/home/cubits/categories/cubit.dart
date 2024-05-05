@@ -7,6 +7,12 @@ import 'package:null_project/home/model/productmodel.dart';
 class Categorecubit extends Cubit<categoriesStates> {
   Categorecubit() : super(init());
   int index = 0;
+  List<String> categories = [
+    "Electronics",
+    "Gewelery",
+    "Men's clothing",
+    "Women's clothing",
+  ];
   void changecategors({required int i}) {
     index = i;
     emit(changecategore());

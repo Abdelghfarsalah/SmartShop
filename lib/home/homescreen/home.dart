@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:null_project/home/cubits/categories/cubit.dart';
 import 'package:null_project/home/cubits/categories/states.dart';
 import 'package:null_project/home/model/productmodel.dart';
+import 'package:null_project/home/widgets/customproductitem.dart';
 import 'package:null_project/home/widgets/customslider.dart';
 import 'package:null_project/home/widgets/selsectCategories.dart';
 
@@ -19,6 +20,7 @@ class _homepageState extends State<homepage> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<Categorecubit>(context);
     return Scaffold(
       key: key,
       appBar: AppBar(
@@ -101,7 +103,21 @@ class _homepageState extends State<homepage> {
               padding: EdgeInsets.only(top: 8.0),
               child: selsectCategories(),
             ),
-            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: BlocBuilder<Categorecubit, categoriesStates>(
+                  builder: (context, state) {
+                    return Text(
+                      "   ${cubit.categories[cubit.index]}...",
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.w900),
+                    );
+                  },
+                ),
+              ),
+            ),
             const Spacer(
               flex: 1,
             ),
@@ -133,104 +149,6 @@ class _homepageState extends State<homepage> {
             ),
             const Spacer(
               flex: 4,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class customproductitem extends StatelessWidget {
-  const customproductitem({super.key, required this.model});
-  final productmodel model;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-        height: 200,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: 1, offset: Offset(0, 10))
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                colors: [
-                  const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3),
-                  Color.fromARGB(255, 224, 224, 224)
-                ]),
-            borderRadius: BorderRadius.circular(20)),
-        child: Row(
-          children: [
-            Expanded(
-                flex: 1, child: Image.network(fit: BoxFit.fill, model.image)),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${model!.title}",
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    model.description,
-                    maxLines: 3,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromARGB(255, 118, 118, 118)),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  const Spacer(),
-                  Text(
-                    "The best price ${model.price}\$ ",
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        color: Color.fromARGB(255, 6, 84, 21)),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.grey,
-                      ),
-                      Text("   ${model.rating.rate} [50]")
-                    ],
-                  )
-                ],
-              ),
             ),
           ],
         ),
