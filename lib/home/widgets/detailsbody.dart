@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:null_project/home/model/productmodel.dart';
 import 'package:null_project/home/widgets/SelectColor.dart';
 import 'package:null_project/home/widgets/Selectcoloritem.dart';
+import 'package:null_project/home/widgets/custombuttonforbuy.dart';
 import 'package:null_project/home/widgets/selectSize.dart';
 
 class Detailsbody extends StatelessWidget {
@@ -14,17 +15,14 @@ class Detailsbody extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-            child: Hero(
-              tag: model.id,
-              child: Container(
-                height: MediaQuery.sizeOf(context).height * 0.4,
-                width: MediaQuery.sizeOf(context).width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(model.image),
-                  ),
+            child: Container(
+              height: MediaQuery.sizeOf(context).height * 0.35,
+              width: MediaQuery.sizeOf(context).width * 0.5,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(model.image),
                 ),
               ),
             ),
@@ -98,7 +96,10 @@ class Detailsbody extends StatelessWidget {
                 Expanded(flex: 1, child: selectSize()),
               ],
             ),
-          )
+          ),
+          const Spacer(),
+          custombuttonforbuy(model: model),
+          const Spacer(),
         ],
       ),
     );

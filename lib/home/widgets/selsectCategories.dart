@@ -65,18 +65,22 @@ class SelsectCategoriesitem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        BlocProvider.of<Categorecubit>(context).getcategory(category: category);
+        BlocProvider.of<Categorecubit>(context)
+            .getcategory(category: category, index: index);
+        // BlocProvider.of<Categorecubit>(context).getornot[index] = true;
         BlocProvider.of<Categorecubit>(context).changecategors(i: index);
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 700),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         height: 100,
         width: MediaQuery.sizeOf(context).width * 0.2,
         decoration: BoxDecoration(
-            color: isactive
-                ? Colors.blue.withOpacity(0.9)
-                : Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(8)),
+          color: isactive
+              ? Color.fromARGB(255, 255, 196, 101)
+              : Colors.grey.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:null_project/home/cubits/bottomNavBar/cubit.dart';
+import 'package:null_project/home/cubits/bottomNavBar/states.dart';
 
 class customNavBar extends StatefulWidget {
   const customNavBar({super.key});
@@ -14,157 +15,93 @@ class _customNavBarState extends State<customNavBar> {
   @override
   Widget build(BuildContext context) {
     var cubit = BlocProvider.of<NavBarcubit>(context);
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.white.withOpacity(0.8),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff17203A).withOpacity(0.3),
-                offset: const Offset(0, 1),
-                blurRadius: 10,
-              )
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<NavBarcubit>(context)
-                        .changescreen(index: 0);
-                    setState(() {});
-                  },
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                          height: 4,
-                          width: cubit.currentindex == 0 ? 30 : 0,
-                          color: Colors.blue,
-                          duration: const Duration(milliseconds: 500)),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Icon(
-                        FontAwesomeIcons.house,
-                        size: cubit.currentindex == 0 ? 25 : 20,
-                        color: cubit.currentindex == 0
-                            ? Colors.black
-                            : Color.fromARGB(255, 104, 104, 104),
-                      ),
-                    ],
-                  )),
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<NavBarcubit>(context)
-                        .changescreen(index: 1);
-                    setState(() {});
-                  },
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                          height: 4,
-                          width: cubit.currentindex == 1 ? 30 : 0,
-                          color: Colors.blue,
-                          duration: const Duration(milliseconds: 500)),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Icon(Icons.add_a_photo_sharp,
-                          size: cubit.currentindex == 1 ? 25 : 20,
-                          color: cubit.currentindex == 1
-                              ? Colors.black
-                              : Color.fromARGB(255, 104, 104, 104)),
-                    ],
-                  )),
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<NavBarcubit>(context)
-                        .changescreen(index: 2);
-                    setState(() {});
-                  },
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                          height: 4,
-                          width: cubit.currentindex == 2 ? 30 : 0,
-                          color: Colors.blue,
-                          duration: const Duration(milliseconds: 500)),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Icon(
-                        Icons.add_a_photo_sharp,
-                        size: cubit.currentindex == 2 ? 25 : 20,
-                        color: cubit.currentindex == 2
-                            ? Colors.black
-                            : Color.fromARGB(255, 104, 104, 104),
-                      ),
-                    ],
-                  )),
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<NavBarcubit>(context)
-                        .changescreen(index: 3);
-                    setState(() {});
-                  },
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                          height: 4,
-                          width: cubit.currentindex == 3 ? 30 : 0,
-                          color: Colors.blue,
-                          duration: const Duration(milliseconds: 500)),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Icon(
-                        Icons.add_a_photo_sharp,
-                        size: cubit.currentindex == 3 ? 25 : 20,
-                        color: cubit.currentindex == 3
-                            ? Colors.black
-                            : Color.fromARGB(255, 104, 104, 104),
-                      ),
-                    ],
-                  )),
-              IconButton(
-                  onPressed: () {
-                    BlocProvider.of<NavBarcubit>(context)
-                        .changescreen(index: 4);
-                    setState(() {});
-                  },
-                  icon: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                          height: 4,
-                          width: cubit.currentindex == 4 ? 30 : 0,
-                          color: Colors.blue,
-                          duration: const Duration(milliseconds: 500)),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      Icon(
-                        FontAwesomeIcons.user,
-                        size: cubit.currentindex == 4 ? 25 : 20,
-                        color: cubit.currentindex == 4
-                            ? Colors.black
-                            : Color.fromARGB(255, 104, 104, 104),
-                      ),
-                    ],
-                  )),
-            ],
-          ),
-        ),
-      ),
+    return BlocBuilder<NavBarcubit, NavBarStates>(
+      builder: (context, state) {
+        return BottomNavigationBar(
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(50),
+          //   color: Colors.white,
+          //   gradient: const LinearGradient(
+          //       begin: Alignment.topCenter,
+          //       end: Alignment.bottomCenter,
+          //       colors: [
+          //         Colors.white,
+          //         Color(0xffFCC873),
+          //       ]),
+          //   //   boxShadow: const [
+          //   //     BoxShadow(
+          //   //         color: Color(0xffFCC873),
+          //   //         offset: Offset(0, 2),
+          //   //         blurRadius: 1,
+          //   //         spreadRadius: 5)
+          //   //   ],
+          // ),
+          // child: Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          currentIndex: cubit.currentindex,
+          selectedItemColor: Colors.orangeAccent,
+          unselectedItemColor: Colors.grey,
+          showSelectedLabels: true,
+          elevation: 10,
+          selectedLabelStyle: const TextStyle(
+              color: Colors.black, fontSize: 14, fontWeight: FontWeight.w800),
+          onTap: (index) {
+            BlocProvider.of<NavBarcubit>(context).changescreen(index: index);
+          },
+          items: const [
+            BottomNavigationBarItem(
+                label: "Home",
+                icon: customnavbaritem(
+                  icon: FontAwesomeIcons.house,
+                  index: 0,
+                )),
+            BottomNavigationBarItem(
+                label: "Favorite",
+                icon: customnavbaritem(
+                  icon: Icons.favorite,
+                  index: 1,
+                )),
+            BottomNavigationBarItem(
+                label: "Cart",
+                icon: customnavbaritem(
+                  icon: FontAwesomeIcons.cartShopping,
+                  index: 2,
+                )),
+            BottomNavigationBarItem(
+                label: "Search",
+                icon: customnavbaritem(
+                  icon: Icons.search,
+                  index: 1,
+                )),
+            BottomNavigationBarItem(
+                label: "Profile",
+                icon: customnavbaritem(
+                  icon: FontAwesomeIcons.user,
+                  index: 3,
+                )),
+            // BottomNavigationBarItem(
+            //   label: "",
+            //   icon: customnavbaritem(
+            //     icon: FontAwesomeIcons.user,
+            //     index: 4,
+            //   ),
+            // ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class customnavbaritem extends StatelessWidget {
+  const customnavbaritem({super.key, required this.index, this.icon});
+  final int index;
+  final IconData? icon;
+  @override
+  Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<NavBarcubit>(context);
+    return Icon(
+      icon,
     );
   }
 }

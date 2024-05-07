@@ -7,20 +7,36 @@ import 'package:null_project/home/model/productmodel.dart';
 class Categorecubit extends Cubit<categoriesStates> {
   Categorecubit() : super(init());
   int index = 0;
+  // List<bool> getornot = [
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  // ];
   List<String> categories = [
     "Electronics",
     "Gewelery",
     "Men's clothing",
     "Women's clothing",
   ];
+  // List<productmodel> Electronics = [];
+  // List<productmodel> Gewelery = [];
+  // List<productmodel> men = [];
+  // List<productmodel> women = [];
+  // late List<List<productmodel>> datafromapi = [
+  //   Electronics,
+  //   Gewelery,
+  //   men,
+  //   women
+  //];
   void changecategors({required int i}) {
     index = i;
     emit(changecategore());
   }
 
-  Future<void> getcategory({required String category}) async {
+  Future<void> getcategory(
+      {required String category, required int index}) async {
     emit(Loading());
-    print("object");
     try {
       List<productmodel> result = [];
       Dio k = Dio();

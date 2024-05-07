@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:null_project/home/cubits/bottomNavBar/cubit.dart';
 import 'package:null_project/home/cubits/categories/cubit.dart';
 import 'package:null_project/home/cubits/categories/states.dart';
+import 'package:null_project/home/homescreen/displayallcategories.dart';
+import 'package:null_project/home/homescreen/displayallproduct.dart';
+import 'package:null_project/home/homescreen/notification.dart';
 import 'package:null_project/home/model/productmodel.dart';
 import 'package:null_project/home/widgets/customproductitem.dart';
 import 'package:null_project/home/widgets/customslider.dart';
+import 'package:null_project/home/widgets/darweritem.dart';
 import 'package:null_project/home/widgets/selsectCategories.dart';
 
 class homepage extends StatefulWidget {
@@ -17,44 +23,60 @@ class homepage extends StatefulWidget {
 
 class _homepageState extends State<homepage> {
   GlobalKey<ScaffoldState> key = GlobalKey();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<Categorecubit>(context)
+        .getcategory(category: "electronics", index: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
     var cubit = BlocProvider.of<Categorecubit>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       key: key,
       appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Color.fromARGB(255, 221, 219, 219),
-              child: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Colors.black,
-                  backgroundImage: AssetImage(
-                      "assets/images/icon/Screenshot 2024-05-04 192346.png")),
-            ),
-            SizedBox(
-              width: 7,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome🤞",
-                  style: TextStyle(
-                      fontSize: 14, color: Color.fromARGB(255, 169, 169, 169)),
-                ),
-                Text(
-                  "Abdelghfar salah",
-                  style: TextStyle(
-                      fontSize: 16, color: Color.fromARGB(255, 1, 1, 1)),
-                ),
-              ],
-            )
-          ],
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Colors.orangeAccent.withOpacity(0.2)),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Color.fromARGB(255, 221, 219, 219),
+                child: CircleAvatar(
+                    radius: 18,
+                    backgroundColor: Colors.black,
+                    backgroundImage: AssetImage(
+                        "assets/images/icon/Screenshot 2024-05-04 192346.png")),
+              ),
+              SizedBox(
+                width: 7,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome🤞",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color.fromARGB(255, 169, 169, 169)),
+                  ),
+                  Text(
+                    "Abdelghfar salah",
+                    style: TextStyle(
+                        fontSize: 16, color: Color.fromARGB(255, 1, 1, 1)),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
         leading: IconButton(
           onPressed: () {
@@ -67,90 +89,331 @@ class _homepageState extends State<homepage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
-              icon: CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.grey.withOpacity(0.2),
-                child: Icon(
-                  FontAwesomeIcons.bell,
-                  color: Colors.grey.withOpacity(1),
-                ),
-              ))
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => notification()),
+              );
+            },
+            icon: CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.grey.withOpacity(0.2),
+              child: Icon(
+                FontAwesomeIcons.bell,
+                color: Colors.grey.withOpacity(1),
+              ),
+            ),
+          ),
+          // IconButton(
+          //     onPressed: () {},
+          //     icon: CircleAvatar(
+          //       radius: 30,
+          //       backgroundColor: Colors.white.withOpacity(0.6),
+          //       child: Icon(
+          //         Icons.settings,
+          //         color: Colors.grey.withOpacity(1),
+          //       ),
+          //     ))
         ],
       ),
-      drawer: const Drawer(
+      drawer: Drawer(
         child: Column(
           children: [
-            DrawerHeader(
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(100)),
+                  color: Color(0xffFBDF71)),
               child: Center(
-                child: Text(
-                  "Smart Shop",
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w900),
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage(
+                      "assets/images/spalsh/Screenshot 2024-04-27 181304.png"),
                 ),
               ),
             ),
+            Darweritem(
+                logout: false,
+                title: "All Product",
+                icon: const Icon(
+                  FontAwesomeIcons.productHunt,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Displayallproduct()));
+                }),
+            Darweritem(
+                logout: false,
+                title: "Categories",
+                icon: const Icon(
+                  FontAwesomeIcons.list,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Displayallcategories(
+                                word: "electonics",
+                              )));
+                }),
+            Darweritem(
+                logout: false,
+                title: "Search",
+                icon: const Icon(
+                  FontAwesomeIcons.searchengin,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  BlocProvider.of<NavBarcubit>(context).changescreen(index: 3);
+                  BlocProvider.of<NavBarcubit>(context).currentindex = 3;
+                }),
+            Darweritem(
+                logout: false,
+                title: "Your Cart",
+                icon: const Icon(
+                  FontAwesomeIcons.cartShopping,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  BlocProvider.of<NavBarcubit>(context).changescreen(index: 2);
+                  BlocProvider.of<NavBarcubit>(context).currentindex = 2;
+                }),
+            Darweritem(
+                logout: false,
+                title: "Favorite",
+                icon: const Icon(
+                  Icons.favorite,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  BlocProvider.of<NavBarcubit>(context).changescreen(index: 1);
+                  BlocProvider.of<NavBarcubit>(context).currentindex = 1;
+                }),
+            Darweritem(
+                logout: false,
+                title: "Setting",
+                icon: const Icon(
+                  Icons.settings,
+                  color: Color.fromARGB(255, 255, 202, 122),
+                ),
+                onPressed: () {
+                  key.currentState!.closeDrawer();
+                  BlocProvider.of<NavBarcubit>(context).changescreen(index: 4);
+                  BlocProvider.of<NavBarcubit>(context).currentindex = 4;
+                }),
+            Spacer(),
+            Spacer(),
+            Darweritem(
+                title: "Log Out",
+                logout: true,
+                icon: const Icon(
+                  FontAwesomeIcons.rightFromBracket,
+                  color: Colors.red,
+                ),
+                onPressed: () {}),
+            Spacer(),
           ],
         ),
       ),
       body: Center(
-        child: Column(
-          children: [
-            const customslider(),
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: selsectCategories(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Align(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              //const customslider(),
+              const Align(
                 alignment: Alignment.bottomLeft,
-                child: BlocBuilder<Categorecubit, categoriesStates>(
-                  builder: (context, state) {
-                    return Text(
-                      "   ${cubit.categories[cubit.index]}...",
-                      style: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.w900),
-                    );
-                  },
+                child: Text(
+                  "   Explore The best",
+                  style: TextStyle(fontSize: 24, color: Colors.grey),
                 ),
               ),
-            ),
-            const Spacer(
-              flex: 1,
-            ),
-            BlocConsumer<Categorecubit, categoriesStates>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                if (state is Success) {
-                  List<productmodel> pro = state.res;
-                  List<customproductitem> item = [];
-                  for (var element in pro) {
-                    item.add(customproductitem(model: element));
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: SizedBox(
-                      height: 200,
-                      child: ListWheelScrollView(
-                        itemExtent: 200,
-                        children: item,
-                      ),
+              const Align(
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "  products in the  ",
+                      style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black),
                     ),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              },
-            ),
-            const Spacer(
-              flex: 4,
-            ),
-          ],
+                    Text(
+                      "world ",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.deepOrangeAccent),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 50,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        onTap: () {
+                          BlocProvider.of<NavBarcubit>(context).currentindex =
+                              3;
+                          BlocProvider.of<NavBarcubit>(context)
+                              .changescreen(index: 3);
+                        },
+                        //style: TextStyle(height: 30),
+                        decoration: const InputDecoration(
+                          hintText: "Enter the Name of product ",
+                          contentPadding: EdgeInsets.only(
+                              left: 10, top: 0, bottom: 0, right: 0),
+                          filled: true,
+                          fillColor: Color.fromARGB(255, 255, 245, 207),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(255, 197, 161, 17)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1),
+                            color: Colors.grey.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: IconButton(
+                          onPressed: () {
+                            BlocProvider.of<NavBarcubit>(context).currentindex =
+                                3;
+                            BlocProvider.of<NavBarcubit>(context)
+                                .changescreen(index: 3);
+                          },
+                          icon: const Icon(
+                            Icons.settings,
+                            color: Colors.grey,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: selsectCategories(),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: BlocBuilder<Categorecubit, categoriesStates>(
+                    builder: (context, state) {
+                      return Row(
+                        children: [
+                          Text(
+                            "   ${cubit.categories[cubit.index]}...",
+                            style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontSize: 22,
+                                color: Color(0xffDF6700),
+                                fontWeight: FontWeight.w900),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Displayallcategories(
+                                    word: cubit.categories[cubit.index],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "Show All",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 243, 170, 106),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          const Icon(
+                            FontAwesomeIcons.arrowRight,
+                            size: 15,
+                            color: Color.fromARGB(255, 243, 170, 106),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              BlocConsumer<Categorecubit, categoriesStates>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is Success) {
+                    List<productmodel> pro = state.res;
+                    List<customproductitem> item = [];
+                    for (var element in pro) {
+                      item.add(
+                          customproductitem(isfavorite: true, model: element));
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.5,
+                        child: ListWheelScrollView(
+                          itemExtent: MediaQuery.sizeOf(context).height * 0.3,
+                          children: item,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.5,
+                        child: const Center(
+                            child: LinearProgressIndicator(
+                          color: Colors.orangeAccent,
+                        )));
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,124 +1,176 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:null_project/home/homescreen/detailsscreen/details.dart';
 import 'package:null_project/home/model/productmodel.dart';
 
-class customproductitem extends StatelessWidget {
-  const customproductitem({super.key, required this.model});
+class customproductitem extends StatefulWidget {
+  customproductitem({super.key, required this.model, required this.isfavorite});
   final productmodel model;
+  bool isfavorite;
+
+  @override
+  State<customproductitem> createState() => _customproductitemState();
+}
+
+class _customproductitemState extends State<customproductitem> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Details(model: model),
-          ),
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-        height: 200,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: 1, offset: Offset(0, 10))
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.bottomLeft,
-                end: Alignment.topRight,
-                colors: [
-                  const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3),
-                  Color.fromARGB(255, 224, 224, 224)
-                ]),
-            borderRadius: BorderRadius.circular(20)),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Hero(
-                tag: model.id,
-                child: Container(
-                  height: 190,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(
-                        model.image,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Details(model: widget.model),
+            ),
+          );
+        },
+        child: Stack(clipBehavior: Clip.none, children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+            height: MediaQuery.sizeOf(context).height * 0.23,
+            decoration: BoxDecoration(
+                // color: Color.fromARGB(255, 248, 228, 147),
+                border: Border.all(color: Colors.yellow),
+                boxShadow: const [
+                  BoxShadow(
+                      color: Colors.grey, blurRadius: 1, offset: Offset(0, 10))
+                ],
+                gradient: const LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xffFCC873),
+                      Colors.white,
+                    ]),
+                borderRadius: BorderRadius.circular(20)),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.model!.title,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xff6D6131),
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
+                      Text(
+                        widget.model.description,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff6D6131),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      const Divider(
+                        color: Color.fromARGB(255, 62, 56, 28),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          const Text(
+                            "The best price  ",
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w900,
+                                color: Color.fromARGB(255, 2, 26, 7)),
+                          ),
+                          Text(
+                            " ${widget.model.price}\$ ",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
+                                color: Color.fromARGB(255, 18, 214, 60)),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 156, 125, 0),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 156, 125, 0),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 156, 125, 0),
+                          ),
+                          const Icon(
+                            Icons.star,
+                            color: Color.fromARGB(255, 46, 41, 20),
+                          ),
+                          Text(
+                            "   ${widget.model.rating.rate} [1200]",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w900,
+                                color: Color.fromARGB(255, 100, 106, 7)),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: IconButton(
+                        onPressed: () {
+                          widget.isfavorite = !widget.isfavorite;
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.favorite,
+                          color: widget.isfavorite
+                              ? const Color.fromARGB(255, 138, 113, 11)
+                              : null,
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: -35,
+            left: MediaQuery.of(context).size.width * 0.65,
+            child: Container(
+              height: 150,
+              width: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: widget.model.image,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${model!.title}",
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    model.description,
-                    maxLines: 3,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromARGB(255, 118, 118, 118)),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  const Spacer(),
-                  Text(
-                    "The best price ${model.price}\$ ",
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        color: Color.fromARGB(255, 6, 84, 21)),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      const Icon(
-                        Icons.star,
-                        color: Colors.grey,
-                      ),
-                      Text("   ${model.rating.rate} [50]")
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+          )
+        ]),
       ),
     );
   }

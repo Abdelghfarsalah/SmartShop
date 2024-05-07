@@ -6,6 +6,7 @@ import 'package:null_project/firebase_options.dart';
 import 'package:null_project/home/cubits/bottomNavBar/cubit.dart';
 import 'package:null_project/home/cubits/categories/cubit.dart';
 import 'package:null_project/home/cubits/managedetails/detailscubit.dart';
+import 'package:null_project/home/cubits/managenotificationCubit/managenotificationCubit.dart';
 import 'package:null_project/home/home.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
 import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
@@ -34,6 +35,7 @@ class SmartpuyApp extends StatelessWidget {
         BlocProvider(create: (context) => logincubit()),
         BlocProvider(create: (context) => NavBarcubit()),
         BlocProvider(create: (context) => Categorecubit()),
+        BlocProvider(create: (context) => managenotificationCubit()),
         BlocProvider(create: (context) => detailscubit())
       ],
       child: const MaterialApp(
