@@ -31,7 +31,10 @@ class _registerState extends State<register> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(
+            top: 20,
+            bottom: 20,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,93 +49,96 @@ class _registerState extends State<register> {
                 const Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    "Sign Up",
+                    "  Sign Up",
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 30),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Form(
-                  key: keyform,
-                  child: Column(
-                    children: [
-                      Customtextfiled(
-                        validator: (validator) {
-                          if (validator!.isEmpty) {
-                            return "This is required";
-                          }
-                        },
-                        onChanged: (data) {
-                          firstname = data;
-                        },
-                        password: false,
-                        label: const Text("First Name"),
-                        hint: "Enter Your First name",
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Customtextfiled(
-                        validator: (validator) {
-                          if (validator!.isEmpty) {
-                            return "This is required";
-                          }
-                        },
-                        onChanged: (data) {
-                          lastname = data;
-                        },
-                        password: false,
-                        label: const Text("Last Name"),
-                        hint: "Enter Your Last Name",
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Customtextfiled(
-                        validator: (validator) {
-                          if (validator!.isEmpty) {
-                            return "This is required";
-                          }
-                        },
-                        onChanged: (data) {
-                          emial = data;
-                        },
-                        password: false,
-                        label: const Text("Email"),
-                        hint: "Enter Your Email",
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Customtextfiled(
-                        password: ispssword,
-                        validator: (validator) {
-                          if (validator!.isEmpty) {
-                            return "This is required";
-                          }
-                        },
-                        onChanged: (data) {
-                          password = data;
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            ispssword = !ispssword;
-                            setState(() {});
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Form(
+                    key: keyform,
+                    child: Column(
+                      children: [
+                        Customtextfiled(
+                          validator: (validator) {
+                            if (validator!.isEmpty) {
+                              return "This is required";
+                            }
                           },
-                          icon: !ispssword
-                              ? const Icon(
-                                  FontAwesomeIcons.eye,
-                                  color: Colors.blue,
-                                )
-                              : const Icon(
-                                  FontAwesomeIcons.eyeSlash,
-                                ),
+                          onChanged: (data) {
+                            firstname = data;
+                          },
+                          password: false,
+                          label: const Text("First Name"),
+                          hint: "Enter Your First name",
                         ),
-                        label: const Text("Password"),
-                        hint: "Enter Your Password",
-                      )
-                    ],
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Customtextfiled(
+                          validator: (validator) {
+                            if (validator!.isEmpty) {
+                              return "This is required";
+                            }
+                          },
+                          onChanged: (data) {
+                            lastname = data;
+                          },
+                          password: false,
+                          label: const Text("Last Name"),
+                          hint: "Enter Your Last Name",
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Customtextfiled(
+                          validator: (validator) {
+                            if (validator!.isEmpty) {
+                              return "This is required";
+                            }
+                          },
+                          onChanged: (data) {
+                            emial = data;
+                          },
+                          password: false,
+                          label: const Text("Email"),
+                          hint: "Enter Your Email",
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Customtextfiled(
+                          password: ispssword,
+                          validator: (validator) {
+                            if (validator!.isEmpty) {
+                              return "This is required";
+                            }
+                          },
+                          onChanged: (data) {
+                            password = data;
+                          },
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              ispssword = !ispssword;
+                              setState(() {});
+                            },
+                            icon: !ispssword
+                                ? const Icon(
+                                    FontAwesomeIcons.eye,
+                                    color: Colors.blue,
+                                  )
+                                : const Icon(
+                                    FontAwesomeIcons.eyeSlash,
+                                  ),
+                          ),
+                          label: const Text("Password"),
+                          hint: "Enter Your Password",
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -180,7 +186,7 @@ class _registerState extends State<register> {
                   }
                 }),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 const Row(
                   children: [

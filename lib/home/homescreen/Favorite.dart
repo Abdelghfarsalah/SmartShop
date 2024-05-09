@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
+import 'package:null_project/home/cubits/manageLOVEandCARD.dart/manageloveandcardcubit.dart';
+import 'package:null_project/home/cubits/manageLOVEandCARD.dart/manageloveandcardstates.dart';
 import 'package:null_project/home/model/productmodel.dart';
-import 'package:null_project/home/widgets/favoriteitemList.dart';
-import 'package:null_project/home/widgets/favoriteitemgrid.dart';
+import 'package:null_project/home/widgets/itemList.dart';
+import 'package:null_project/home/widgets/itemgrid.dart';
 
-class second extends StatefulWidget {
-  const second({super.key});
+class Favorite extends StatefulWidget {
+  const Favorite({super.key});
 
   @override
-  State<second> createState() => _secondState();
+  State<Favorite> createState() => _FavoriteState();
 }
 
-class _secondState extends State<second> {
+class _FavoriteState extends State<Favorite> {
   bool islist = true;
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<ManageLove_Cart_states_cubit>(context);
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -61,225 +67,41 @@ class _secondState extends State<second> {
             ),
           ],
         ),
-        body: islist
-            ? ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) => Hero(
-                  tag: index,
-                  child: favoriteitemlist(
-                    index: index,
-                    model: productmodel(
-                      id: 1,
-                      title:
-                          "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                      price: "78",
-                      description:
-                          "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                      category: "category",
-                      image:
-                          "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                      rating: Rating(rate: 5, count: 5),
-                    ),
-                  ),
-                ),
-              )
-            : GridView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) => Hero(
-                  tag: index,
-                  child: favoriteitemgrid(
-                    index: index,
-                    model: productmodel(
-                      id: 1,
-                      title:
-                          "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                      price: "78",
-                      description:
-                          "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                      category: "category",
-                      image:
-                          "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                      rating: Rating(rate: 5, count: 5),
-                    ),
-                  ),
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisExtent: 350, crossAxisCount: 2),
-              ));
+        body:
+            BlocConsumer<ManageLove_Cart_states_cubit, magnageLoveAndCartState>(
+          builder: (context, state) {
+            return cubit.LoveItem.length == 0
+                ? Center(
+                    child: Lottie.asset("assets/animaitons/cartempty.json"))
+                : islist
+                    ? ListView.builder(
+                        itemCount: cubit.LoveItem.length,
+                        itemBuilder: (context, index) => Hero(
+                          tag: index,
+                          child: itemlist(
+                            isfavorite: false,
+                            cart: false,
+                            index: index,
+                            model: cubit.LoveItem[index],
+                          ),
+                        ),
+                      )
+                    : GridView.builder(
+                        itemCount: cubit.LoveItem.length,
+                        itemBuilder: (context, index) => Hero(
+                          tag: index,
+                          child: itemgrid(
+                            isfavorite: false,
+                            cart: false,
+                            model: cubit.LoveItem[index],
+                          ),
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 350, crossAxisCount: 2),
+                      );
+          },
+          listener: (context, state) {},
+        ));
   }
 }
-/*
- ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-            favoriteitemlist(
-              model: productmodel(
-                id: 1,
-                title:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                price: "78",
-                description:
-                    "titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle",
-                category: "category",
-                image:
-                    "https://t3.ftcdn.net/jpg/02/10/85/26/360_F_210852662_KWN4O1tjxIQt8axc2r82afdSwRSLVy7g.jpg",
-                rating: Rating(rate: 5, count: 5),
-              ),
-            ),
-          ],
-        )
- */

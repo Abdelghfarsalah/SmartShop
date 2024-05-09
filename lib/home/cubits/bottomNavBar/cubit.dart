@@ -4,12 +4,12 @@ import 'package:null_project/home/homescreen/Favorite.dart';
 import 'package:null_project/home/homescreen/five.dart';
 import 'package:null_project/home/homescreen/four.dart';
 import 'package:null_project/home/homescreen/home.dart';
-import 'package:null_project/home/homescreen/three.dart';
+import 'package:null_project/home/homescreen/cart.dart';
 
 class NavBarcubit extends Cubit<NavBarStates> {
   NavBarcubit() : super(init());
   int currentindex = 0;
-  List screen = const [homepage(), second(), three(), four(), five()];
+  List screen = const [homepage(), Favorite(), three(), four(), five()];
 
   void changescreen({required int index}) {
     currentindex = index;

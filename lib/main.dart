@@ -5,11 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:null_project/firebase_options.dart';
 import 'package:null_project/home/cubits/bottomNavBar/cubit.dart';
 import 'package:null_project/home/cubits/categories/cubit.dart';
+import 'package:null_project/home/cubits/manageLOVEandCARD.dart/manageloveandcardcubit.dart';
 import 'package:null_project/home/cubits/managedetails/detailscubit.dart';
 import 'package:null_project/home/cubits/managenotificationCubit/managenotificationCubit.dart';
 import 'package:null_project/home/home.dart';
 import 'package:null_project/loginAndRegister/cubits/logincubit/cubit.dart';
 import 'package:null_project/loginAndRegister/cubits/registercubit/cubit.dart';
+import 'package:null_project/loginAndRegister/register.dart';
+import 'package:null_project/onboard/Screens/onboardHome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +39,7 @@ class SmartpuyApp extends StatelessWidget {
         BlocProvider(create: (context) => NavBarcubit()),
         BlocProvider(create: (context) => Categorecubit()),
         BlocProvider(create: (context) => managenotificationCubit()),
+        BlocProvider(create: (context) => ManageLove_Cart_states_cubit()),
         BlocProvider(create: (context) => detailscubit())
       ],
       child: const MaterialApp(

@@ -12,7 +12,6 @@ import 'package:null_project/loginAndRegister/register.dart';
 import 'package:null_project/loginAndRegister/widgets/contactdialog.dart';
 import 'package:null_project/loginAndRegister/widgets/custombutton.dart';
 import 'package:null_project/loginAndRegister/widgets/customtextfiled.dart';
-import 'package:null_project/splashScreen/view.dart';
 
 class login extends StatefulWidget {
   const login({super.key});

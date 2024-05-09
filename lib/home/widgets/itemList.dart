@@ -1,21 +1,37 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:null_project/home/cubits/manageLOVEandCARD.dart/manageloveandcardcubit.dart';
 import 'package:null_project/home/homescreen/detailsscreen/details.dart';
 import 'package:null_project/home/model/productmodel.dart';
 
-class favoriteitemlist extends StatelessWidget {
-  const favoriteitemlist({super.key, required this.model, required this.index});
+class itemlist extends StatefulWidget {
+  itemlist(
+      {super.key,
+      required this.cart,
+      required this.isfavorite,
+      required this.model,
+      required this.index});
   final productmodel model;
   final int index;
+  bool isfavorite;
+  bool cart;
+  @override
+  State<itemlist> createState() => _itemlistState();
+}
+
+class _itemlistState extends State<itemlist> {
   @override
   Widget build(BuildContext context) {
+    var cubti = BlocProvider.of<ManageLove_Cart_states_cubit>(context);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Details(model: model),
+            builder: (context) => Details(model: widget.model),
           ),
         );
       },
@@ -48,7 +64,8 @@ class favoriteitemlist extends StatelessWidget {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: CachedNetworkImageProvider(model.image)),
+                          image:
+                              CachedNetworkImageProvider(widget.model.image)),
                       borderRadius: BorderRadius.circular(10)),
                 ),
               ),
@@ -59,19 +76,19 @@ class favoriteitemlist extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.title,
+                      widget.model.title,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
                           fontSize: 30, fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      model.description,
+                      widget.model.description,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
                     Text(
-                      "${model.price}\$ ",
+                      "${widget.model.price}\$ ",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
@@ -84,9 +101,36 @@ class favoriteitemlist extends StatelessWidget {
               ),
               const Spacer(),
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(FontAwesomeIcons.cartShopping)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.favorite))
+                  onPressed: () {
+                    if (widget.model.cart) {
+                      cubti.removefromcart(item: widget.model);
+                    } else {
+                      cubti.addtocart(item: widget.model);
+                    }
+                    widget.model.cart = !widget.model.cart;
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    FontAwesomeIcons.cartShopping,
+                    color: widget.model.cart
+                        ? const Color.fromARGB(255, 138, 11, 11)
+                        : null,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    if (widget.model.isactive) {
+                      cubti.removefromLove(item: widget.model);
+                    } else {
+                      cubti.addtolove(item: widget.model);
+                    }
+                    widget.model.isactive = !widget.model.isactive;
+                    setState(() {});
+                  },
+                  icon: Icon(
+                      color: widget.model.isactive
+                          ? const Color.fromARGB(255, 138, 11, 11)
+                          : null,
+                      Icons.favorite))
             ],
           ),
         ),

@@ -27,8 +27,11 @@ class _homepageState extends State<homepage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<Categorecubit>(context)
-        .getcategory(category: "electronics", index: 0);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -148,22 +151,6 @@ class _homepageState extends State<homepage> {
                 }),
             Darweritem(
                 logout: false,
-                title: "Categories",
-                icon: const Icon(
-                  FontAwesomeIcons.list,
-                  color: Color.fromARGB(255, 255, 202, 122),
-                ),
-                onPressed: () {
-                  key.currentState!.closeDrawer();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Displayallcategories(
-                                word: "electonics",
-                              )));
-                }),
-            Darweritem(
-                logout: false,
                 title: "Search",
                 icon: const Icon(
                   FontAwesomeIcons.searchengin,
@@ -232,40 +219,130 @@ class _homepageState extends State<homepage> {
                 height: 20,
               ),
               //const customslider(),
-              const Align(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  "   Explore The best",
-                  style: TextStyle(fontSize: 24, color: Colors.grey),
-                ),
-              ),
-              const Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  children: [
-                    Text(
-                      "  products in the  ",
-                      style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.black),
-                    ),
-                    Text(
-                      "world ",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 32,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.deepOrangeAccent),
-                    ),
-                  ],
-                ),
-              ),
+              // const Align(
+              //   alignment: Alignment.bottomLeft,
+              //   child: Text(
+              //     "   Explore The best",
+              //     style: TextStyle(fontSize: 24, color: Colors.grey),
+              //   ),
+              // ),
+              // const Align(
+              //   alignment: Alignment.bottomLeft,
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "  products in the  ",
+              //         style: TextStyle(
+              //             fontStyle: FontStyle.italic,
+              //             fontSize: 30,
+              //             fontWeight: FontWeight.w900,
+              //             color: Colors.black),
+              //       ),
+              //       Text(
+              //         "world ",
+              //         style: TextStyle(
+              //             decoration: TextDecoration.underline,
+              //             fontStyle: FontStyle.italic,
+              //             fontSize: 32,
+              //             fontWeight: FontWeight.w900,
+              //             color: Colors.deepOrangeAccent),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(
                 height: 20,
               ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.26,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                          top: 10, left: 10, right: 10, bottom: 0),
+                      width: MediaQuery.sizeOf(context).width,
+                      height: MediaQuery.sizeOf(context).height * 0.2,
+                      decoration: BoxDecoration(
+
+                          // gradient: const LinearGradient(
+                          //     begin: Alignment.bottomLeft,
+                          //     end: Alignment.topCenter,
+                          //     colors: [
+                          //       Color.fromARGB(255, 255, 175, 54),
+                          //       // Color.fromARGB(255, 255, 255, 255),
+                          //     ]),
+                          boxShadow: const [
+                            BoxShadow(
+                                blurRadius: 6,
+                                offset: Offset(10, 10),
+                                color: Colors.grey),
+                            // BoxShadow(
+                            //     blurRadius: 6,
+                            //     offset: Offset(-10, -10),
+                            //     color: Color.fromARGB(255, 209, 208, 208))
+                          ],
+                          border: Border.all(
+                              color: const Color.fromARGB(255, 211, 211, 211),
+                              width: 1),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromARGB(255, 255, 169, 78)),
+                      child: const Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          //const customslider(),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "   Explore The best",
+                              style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.w800,
+                                  color: Color.fromARGB(255, 152, 152, 152)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "  products in the  ",
+                                  style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.black),
+                                ),
+                                Text(
+                                  "world ",
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontStyle: FontStyle.italic,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.deepOrangeAccent),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                        left: MediaQuery.sizeOf(context).width * 0.57,
+                        top: -70,
+                        child: Image.asset(
+                            height: MediaQuery.sizeOf(context).width * 0.5,
+                            "assets/images/icon/409615d863ca502e9ef0a9946bf9c5dd-removebg-preview.png"))
+                  ],
+                ),
+              ),
+
               SizedBox(
                 height: 50,
                 child: Row(
@@ -332,7 +409,7 @@ class _homepageState extends State<homepage> {
                 child: selsectCategories(),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 20),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: BlocBuilder<Categorecubit, categoriesStates>(
@@ -348,31 +425,6 @@ class _homepageState extends State<homepage> {
                                 fontWeight: FontWeight.w900),
                           ),
                           const Spacer(),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Displayallcategories(
-                                    word: cubit.categories[cubit.index],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              "Show All",
-                              style: TextStyle(
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 243, 170, 106),
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          const Icon(
-                            FontAwesomeIcons.arrowRight,
-                            size: 15,
-                            color: Color.fromARGB(255, 243, 170, 106),
-                          ),
                           const SizedBox(
                             width: 10,
                           )
@@ -389,8 +441,25 @@ class _homepageState extends State<homepage> {
                     List<productmodel> pro = state.res;
                     List<customproductitem> item = [];
                     for (var element in pro) {
-                      item.add(
-                          customproductitem(isfavorite: true, model: element));
+                      item.add(customproductitem(
+                          cart: false, isfavorite: false, model: element));
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.5,
+                        child: ListWheelScrollView(
+                          itemExtent: MediaQuery.sizeOf(context).height * 0.3,
+                          children: item,
+                        ),
+                      ),
+                    );
+                  } else if (state is changecategorewithdata) {
+                    List<productmodel> pro = state.res;
+                    List<customproductitem> item = [];
+                    for (var element in pro) {
+                      item.add(customproductitem(
+                          cart: false, isfavorite: false, model: element));
                     }
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),

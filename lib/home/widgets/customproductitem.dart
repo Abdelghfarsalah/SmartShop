@@ -1,12 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:null_project/home/cubits/manageLOVEandCARD.dart/manageloveandcardcubit.dart';
 import 'package:null_project/home/homescreen/detailsscreen/details.dart';
 import 'package:null_project/home/model/productmodel.dart';
 
 class customproductitem extends StatefulWidget {
-  customproductitem({super.key, required this.model, required this.isfavorite});
+  customproductitem(
+      {super.key,
+      required this.cart,
+      required this.model,
+      required this.isfavorite});
   final productmodel model;
   bool isfavorite;
+  bool cart;
 
   @override
   State<customproductitem> createState() => _customproductitemState();
@@ -15,6 +23,7 @@ class customproductitem extends StatefulWidget {
 class _customproductitemState extends State<customproductitem> {
   @override
   Widget build(BuildContext context) {
+    var cubti = BlocProvider.of<ManageLove_Cart_states_cubit>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -136,17 +145,44 @@ class _customproductitemState extends State<customproductitem> {
                   flex: 1,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: IconButton(
-                        onPressed: () {
-                          widget.isfavorite = !widget.isfavorite;
-                          setState(() {});
-                        },
-                        icon: Icon(
-                          Icons.favorite,
-                          color: widget.isfavorite
-                              ? const Color.fromARGB(255, 138, 113, 11)
-                              : null,
-                        )),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            if (widget.model.isactive) {
+                              cubti.removefromLove(item: widget.model);
+                            } else {
+                              cubti.addtolove(item: widget.model);
+                            }
+                            widget.model.isactive = !widget.model.isactive;
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            Icons.favorite,
+                            color: widget.model.isactive
+                                ? const Color.fromARGB(255, 138, 11, 11)
+                                : null,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            if (!widget.model.cart) {
+                              cubti.addtocart(item: widget.model);
+                            } else {
+                              cubti.removefromcart(item: widget.model);
+                            }
+                            widget.model.cart = !widget.model.cart;
+                            setState(() {});
+                          },
+                          icon: Icon(
+                            FontAwesomeIcons.cartShopping,
+                            color: widget.model.cart
+                                ? Color.fromARGB(255, 138, 11, 11)
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -164,8 +200,9 @@ class _customproductitemState extends State<customproductitem> {
               child: CachedNetworkImage(
                 fit: BoxFit.fill,
                 imageUrl: widget.model.image,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
+                placeholder: (context, url) => const CircularProgressIndicator(
+                  color: Colors.orange,
+                ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),

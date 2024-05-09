@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:null_project/home/homescreen/detailsscreen/buypage.dart';
 import 'package:null_project/home/model/productmodel.dart';
-import 'package:null_project/splashScreen/view.dart';
 
 class custombuttonforbuy extends StatelessWidget {
   const custombuttonforbuy({super.key, required this.model});

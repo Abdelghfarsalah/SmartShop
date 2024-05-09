@@ -3,8 +3,8 @@ import 'package:null_project/onboard/Screens/onboard_2.dart';
 import 'package:null_project/onboard/Screens/onboard_3.dart';
 import 'package:null_project/onboard/widgets/StackinOboardone.dart';
 
-class onboaed1 extends StatelessWidget {
-  const onboaed1({super.key});
+class onboard1 extends StatelessWidget {
+  const onboard1({super.key});
 
   @override
   Widget build(BuildContext context) {

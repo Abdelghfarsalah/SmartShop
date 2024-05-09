@@ -7,6 +7,9 @@ class productmodel {
   final String image;
   final Rating rating;
 
+  bool isactive = false;
+  bool cart = false;
+
   productmodel({
     required this.id,
     required this.title,

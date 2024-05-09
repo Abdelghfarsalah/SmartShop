@@ -29,7 +29,7 @@ class _Onboard_homeState extends State<Onboard_home> {
                 setState(() {});
               },
               children: const [
-                onboaed1(),
+                onboard1(),
                 onboard_TOW(),
                 onboard_three(),
               ],
